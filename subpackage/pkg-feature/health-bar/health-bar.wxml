@@ -1,0 +1,137 @@
+<view class="page">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack">
+      <text class="nav-back-icon">‹</text>
+    </view>
+    <text class="nav-title">健康栏</text>
+  </view>
+
+  <scroll-view scroll-y class="content">
+
+    <!-- ==================== 顶部：步数能量环 ==================== -->
+    <view class="section-vitality">
+      <view class="vitality-ring-wrapper">
+        <!-- 环形画布 -->
+        <canvas canvas-id="vitalityRing" class="vitality-canvas"></canvas>
+        <!-- 圆心内容 -->
+        <view class="vitality-center">
+          <text class="vitality-steps">{{displaySteps}}</text>
+          <text class="vitality-label">今日步数</text>
+          <view class="vitality-divider"></view>
+          <text class="vitality-target">今日目标 10,000 步</text>
+        </view>
+      </view>
+
+      <!-- 环形下方三个指标 -->
+      <view class="vitality-metrics">
+        <view class="metric-item">
+          <text class="metric-num">{{calories}} kcal</text>
+          <text class="metric-desc">消耗卡路里</text>
+        </view>
+        <view class="metric-divider"></view>
+        <view class="metric-item">
+          <text class="metric-num">{{distance}} km</text>
+          <text class="metric-desc">行走距离</text>
+        </view>
+        <view class="metric-divider"></view>
+        <view class="metric-item">
+          <text class="metric-num">{{activeMinutes}} 分钟</text>
+          <text class="metric-desc">活跃时长</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ==================== 中部：AI 健康私语 ==================== -->
+    <view class="section-wisdom">
+      <view class="wisdom-card">
+        <!-- 卡片顶部图标 -->
+        <view class="wisdom-header">
+          <view class="wisdom-icon-wrap">
+            <text class="wisdom-icon">💬</text>
+          </view>
+          <text class="wisdom-title">AI 健康私语</text>
+        </view>
+        <!-- 私语内容 -->
+        <text class="wisdom-content">{{wisdomText}}</text>
+        <!-- 底部操作 -->
+        <view class="wisdom-footer">
+          <text class="wisdom-step-hint">当前步数：{{displaySteps}}</text>
+          <view wx:if="{{showWeRunAuth}}" class="wisdom-auth-btn" bindtap="onTapAuthWeRun">
+            <text>同步微信步数</text>
+          </view>
+          <text wx:else class="wisdom-synced">✓ 已同步</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ==================== 底部：健康百科/科目 ==================== -->
+    <view class="section-library">
+      <view class="library-title-row">
+        <text class="library-title">健康百科</text>
+        <text class="library-more" bindtap="onTapMoreLibrary">更多 ›</text>
+      </view>
+
+      <!-- 科目分类标签 -->
+      <view class="library-tabs">
+        <view
+          class="library-tab {{activeTab === 'all' ? 'active' : ''}}"
+          bindtap="onTabChange"
+          data-tab="all"
+        >
+          全部
+        </view>
+        <view
+          class="library-tab {{activeTab === 'diet' ? 'active' : ''}}"
+          bindtap="onTabChange"
+          data-tab="diet"
+        >
+          🍽️ 膳食经
+        </view>
+        <view
+          class="library-tab {{activeTab === 'stretch' ? 'active' : ''}}"
+          bindtap="onTabChange"
+          data-tab="stretch"
+        >
+          💪 筋骨堂
+        </view>
+        <view
+          class="library-tab {{activeTab === 'mental' ? 'active' : ''}}"
+          bindtap="onTabChange"
+          data-tab="mental"
+        >
+          🧘 心经
+        </view>
+      </view>
+
+      <!-- 列表内容 -->
+      <view class="library-list">
+        <block wx:for="{{filteredArticles}}" wx:key="id">
+          <view class="library-item" bindtap="onArticleTap" data-id="{{item.id}}">
+            <view class="library-item-thumb">
+              <view class="library-item-icon-wrap">
+                <text class="library-item-emoji">{{item.emoji}}</text>
+              </view>
+            </view>
+            <view class="library-item-content">
+              <text class="library-item-title">{{item.title}}</text>
+              <text class="library-item-desc">{{item.desc}}</text>
+              <view class="library-item-meta">
+                <text class="library-item-tag">{{item.categoryLabel}}</text>
+                <text class="library-item-time">{{item.readTime}}</text>
+              </view>
+            </view>
+            <text class="library-item-arrow">›</text>
+          </view>
+        </block>
+
+        <view wx:if="{{!filteredArticles.length}}" class="library-empty">
+          <text>暂无相关内容</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部安全区域占位 -->
+    <view class="safe-bottom"></view>
+
+  </scroll-view>
+</view>

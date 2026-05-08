@@ -1,0 +1,53 @@
+.page {
+  background-color: #fdf8f0;
+  min-height: 100vh;
+}
+
+.nav-bar {
+  padding-top: 44px;
+  height: 44px;
+  background-color: #e8d3b9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-title {
+  font-size: 23px;
+  color: #8c6a4b;
+  font-weight: 600;
+}
+
+.content {
+  padding: 24rpx 24rpx;
+  box-sizing: border-box;
+}
+
+.call-card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 24rpx 22rpx;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.call-item {
+  height: 112rpx;
+  border-radius: 20rpx;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 41rpx;
+  color: #333333;
+  font-weight: 600;
+  margin-bottom: 18rpx;
+}
+
+.call-item:last-child {
+  margin-bottom: 0;
+}
+
+.call-item-text {
+  line-height: 1;
+}
+

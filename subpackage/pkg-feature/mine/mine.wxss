@@ -1,0 +1,11 @@
+page { background: #F7F7F7; }
+.nav-bar { padding-top: 44px; height: 44px; background: #E8D3B9; display: flex; align-items: center; justify-content: center; }
+.nav-title { font-size: 23px; color: #8C6A4B; font-weight: 600; }
+.profile-card { margin: 24rpx; background: #FFFFFF; border-radius: 24rpx; padding: 28rpx; display: flex; align-items: center; }
+.avatar { width: 96rpx; height: 96rpx; border-radius: 50%; background: #F0D7E2; margin-right: 24rpx; }
+.name { font-size: 39rpx; color: #333333; font-weight: 600; }
+.sub { margin-top: 12rpx; font-size: 32rpx; color: #777777; line-height: 1.6; }
+.group-card { margin: 24rpx; background: #FFFFFF; border-radius: 24rpx; padding: 8rpx 24rpx; }
+.group-title { font-size: 36rpx; color: #333333; font-weight: 600; padding: 24rpx 0; }
+.row { padding: 28rpx 0; border-top: 1px solid #F2F2F2; font-size: 34rpx; color: #444444; display: flex; align-items: center; justify-content: space-between; }
+.arrow { color: #BBBBBB; font-size: 39rpx; }

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "健康监测",
+  "usingComponents": {
+    "ec-canvas": "/miniprogram_npm/echarts-for-weixin/ec-canvas"
+  }
+}
+

@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/home/home"
+  ],
+  "subPackages": [
+    {
+      "root": "subpackage/pkg-service",
+      "name": "service",
+      "pages": [
+        "services/services",
+        "service-detail/service-detail",
+        "service-booking/service-booking",
+        "order-success/order-success",
+        "order-list/order-list",
+        "order-detail/order-detail",
+        "all-services/all-services"
+      ]
+    },
+    {
+      "root": "subpackage/pkg-feature",
+      "name": "feature",
+      "pages": [
+        "reminder/reminder",
+        "emergency/emergency",
+        "quick-actions/quick-actions",
+        "health/health",
+        "health-bar/health-bar",
+        "health-monitor/health-monitor",
+        "chat/chat",
+        "mine/mine"
+      ]
+    }
+  ],
+  "lazyCodeLoading": "requiredComponents",
+  "preloadRule": {
+    "pages/home/home": {
+      "network": "wifi",
+      "packages": ["service", "feature"]
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于展示附近线下活动地点与计算距离"
+    }
+  },
+  "window": {
+    "navigationStyle": "custom"
+  }
+}

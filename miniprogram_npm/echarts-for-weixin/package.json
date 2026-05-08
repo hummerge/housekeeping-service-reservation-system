@@ -1,0 +1,5 @@
+{
+  "name": "echarts-for-weixin",
+  "main": "ec-canvas/index.js",
+  "miniprogram": "ec-canvas"
+}

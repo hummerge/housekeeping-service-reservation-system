@@ -1,0 +1,14 @@
+<view class="page">
+  <view class="nav-bar"><text class="nav-title">快捷入口</text></view>
+
+  <view class="hero-card">
+    <view class="hero-title">需要快速处理什么需求？</view>
+    <view class="hero-desc">这里先提供高频入口，后续可扩展紧急求助、联系客服、发布代办。</view>
+  </view>
+
+  <block wx:for="{{actions}}" wx:key="url">
+    <view class="action-btn" bindtap="goAction" data-url="{{item.url}}">{{item.name}}</view>
+  </block>
+
+  <view class="service-btn" bindtap="callService">联系客服（占位）</view>
+</view>

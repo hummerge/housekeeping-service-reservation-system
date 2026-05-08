@@ -1,0 +1,20 @@
+<view class="page">
+  <view class="nav-bar">
+    <text class="nav-title">紧急呼救</text>
+  </view>
+
+  <view class="content">
+    <view class="call-card">
+      <view class="call-item" bindtap="onCallTap" data-phone-number="110">
+        <text class="call-item-text">紧急110</text>
+      </view>
+      <view class="call-item" bindtap="onCallTap" data-phone-number="119">
+        <text class="call-item-text">紧急119</text>
+      </view>
+      <view class="call-item" bindtap="onCallTap" data-phone-number="120">
+        <text class="call-item-text">紧急120</text>
+      </view>
+    </view>
+  </view>
+</view>
+

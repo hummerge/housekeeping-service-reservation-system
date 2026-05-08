@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="nav-bar"><text class="nav-title">{{navTitle}}</text></view>
+  <view class="profile-card">
+    <view class="avatar"></view>
+    <view>
+      <view class="name">{{profileName}}</view>
+      <view class="sub">{{profileSub}}</view>
+    </view>
+  </view>
+
+  <block wx:for="{{groups}}" wx:key="title">
+    <view class="group-card">
+      <view class="group-title">{{item.title}}</view>
+      <block wx:for="{{item.items}}" wx:key="name">
+        <view class="row" bindtap="onMenuTap" data-action="{{item.action}}">
+          <text>{{item.name}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </block>
+    </view>
+  </block>
+</view>

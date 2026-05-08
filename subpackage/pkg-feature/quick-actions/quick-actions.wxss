@@ -1,0 +1,8 @@
+page { background: #F7F7F7; }
+.nav-bar { padding-top: 44px; height: 44px; background: #E8D3B9; display: flex; align-items: center; justify-content: center; }
+.nav-title { font-size: 23px; color: #8C6A4B; font-weight: 600; }
+.hero-card { margin: 24rpx; background: #FFFFFF; border-radius: 24rpx; padding: 32rpx 28rpx; }
+.hero-title { font-size: 41rpx; color: #333333; font-weight: 600; }
+.hero-desc { margin-top: 16rpx; color: #666666; font-size: 34rpx; line-height: 1.7; }
+.action-btn,.service-btn { margin: 24rpx; height: 92rpx; background: #FFFFFF; border-radius: 24rpx; display: flex; align-items: center; justify-content: center; font-size: 36rpx; color: #444444; }
+.service-btn { background: #D68FAC; color: #FFFFFF; }

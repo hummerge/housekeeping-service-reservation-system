@@ -1,0 +1,189 @@
+page {
+  background: #F7F7F7;
+  min-height: 100vh;
+}
+
+.nav-bar {
+  padding-top: 44px;
+  height: 44px;
+  background: #E8D3B9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-title {
+  font-size: 23px;
+  color: #8C6A4B;
+  font-weight: 600;
+}
+
+.section {
+  margin: 24rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.section-steps {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.steps-left {
+  position: relative;
+  width: 240rpx;
+  height: 240rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-canvas {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.step-center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.step-number {
+  font-size: 63rpx;
+  font-weight: 900;
+  color: #333333;
+}
+
+.step-label {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  color: #666666;
+  font-weight: 600;
+}
+
+.step-target {
+  margin-top: 4rpx;
+  font-size: 28rpx;
+  color: #888888;
+  font-weight: 600;
+}
+
+.steps-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.metric-card {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 18rpx;
+  padding: 16rpx;
+}
+
+.metric-label {
+  font-size: 30rpx;
+  color: #666666;
+  font-weight: 600;
+}
+
+.metric-value {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 36rpx;
+  color: #333333;
+  font-weight: 800;
+}
+
+.werun-btn {
+  margin-top: 6rpx;
+}
+
+.werun-tip {
+  margin-top: 6rpx;
+  font-size: 30rpx;
+  color: #999999;
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 900;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.trend-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 18rpx;
+}
+
+.trend-item {
+  width: 64rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trend-bar {
+  width: 36rpx;
+  background: #F4A261;
+  border-radius: 12rpx 12rpx 0 0;
+  min-height: 10rpx;
+}
+
+.trend-day {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #666666;
+  font-weight: 600;
+}
+
+.trend-step {
+  margin-top: 4rpx;
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 800;
+}
+
+.trend-empty {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  color: #999999;
+  font-weight: 600;
+}
+
+.card {
+  margin-top: 12rpx;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 20rpx;
+  padding: 18rpx;
+}
+
+.card-title {
+  font-size: 34rpx;
+  font-weight: 900;
+  color: #333333;
+}
+
+.card-desc {
+  margin-top: 10rpx;
+  font-size: 32rpx;
+  color: #555555;
+  line-height: 1.7;
+}
+

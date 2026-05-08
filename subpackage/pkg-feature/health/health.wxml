@@ -1,0 +1,74 @@
+<view class="page">
+  <view class="nav-bar">
+    <text class="nav-title">健康</text>
+  </view>
+
+  <!-- 步数圆环 + 卡路里 / 运动时长 -->
+  <view class="section section-steps">
+    <view class="steps-left">
+      <canvas canvas-id="stepRing" class="step-canvas"></canvas>
+      <view class="step-center">
+        <text class="step-number">{{todaySteps}}</text>
+        <text class="step-label">今日步数</text>
+        <text class="step-target">目标 {{stepTarget}} 步</text>
+      </view>
+    </view>
+
+    <view class="steps-right">
+      <view class="metric-card">
+        <text class="metric-label">卡路里</text>
+        <text class="metric-value">{{calories}} kcal</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-label">运动时长</text>
+        <text class="metric-value">{{durationMinutes}} 分钟</text>
+      </view>
+      <button
+        wx:if="{{showWeRunAuth}}"
+        class="werun-btn"
+        size="mini"
+        bindtap="onTapAuthWeRun"
+      >
+        同步微信步数
+      </button>
+      <text wx:else class="werun-tip">已同步微信步数</text>
+    </view>
+  </view>
+
+  <!-- 最近7天趋势 -->
+  <view class="section">
+    <view class="section-title">最近7天趋势</view>
+    <view class="trend-wrapper">
+      <block wx:for="{{trend7Days}}" wx:key="day">
+        <view class="trend-item">
+          <view class="trend-bar" style="height: {{item.ratio * 100}}%;"></view>
+          <text class="trend-day">{{item.day}}</text>
+          <text class="trend-step">{{item.step}}</text>
+        </view>
+      </block>
+      <view wx:if="{{!trend7Days.length}}" class="trend-empty">
+        <text>同步步数后，将为您展示最近一周的运动趋势。</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日健康建议 -->
+  <view class="section">
+    <view class="section-title">今日健康建议</view>
+    <view class="card">
+      <text class="card-desc">{{suggestion}}</text>
+    </view>
+  </view>
+
+  <!-- 科普卡片 -->
+  <view class="section">
+    <view class="section-title">健康科普</view>
+    <block wx:for="{{scienceCards}}" wx:key="title">
+      <view class="card">
+        <view class="card-title">{{item.title}}</view>
+        <view class="card-desc">{{item.desc}}</view>
+      </view>
+    </block>
+  </view>
+</view>
+

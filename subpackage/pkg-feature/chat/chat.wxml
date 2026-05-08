@@ -1,0 +1,191 @@
+<view class="page" bindtouchend="onPageVoiceTouchEnd" bindtouchcancel="onPageVoiceTouchCancel">
+
+  <!-- ==================== 自定义导航栏 ==================== -->
+  <view class="nav-bar">
+    <view class="nav-status" style="height:{{statusBarHeight}}px"></view>
+    <view class="nav-content">
+      <!-- 左上角：返回按钮 -->
+      <view class="nav-back" bindtap="goBack">
+        <text class="back-icon">‹</text>
+      </view>
+
+      <!-- 中间：标题 -->
+      <view class="nav-title-row">
+        <image class="nav-ai-avatar" src="{{aiAvatar}}" mode="aspectFill" />
+        <view class="nav-title-text">
+          <text class="nav-title">{{navTitle}}</text>
+          <text class="nav-subtitle">{{navSubtitle}}</text>
+        </view>
+      </view>
+
+      <!-- 右上角：朗读开关 + 音量滑块 -->
+      <view class="nav-right">
+        <!-- 音量滑块（可拖动调整音量） -->
+        <view wx:if="{{showVolumeSlider}}" class="volume-panel">
+          <slider
+            class="volume-slider"
+            min="0"
+            max="100"
+            value="{{ttsVolume * 100}}"
+            bindchange="onVolumeChange"
+            activeColor="#42b983"
+            backgroundColor="#e0e0e0"
+            block-size="14"
+          />
+          <text class="volume-label">{{ttsEnabled ? '朗读开' : '朗读关'}}</text>
+        </view>
+        <!-- 朗读切换按钮 -->
+        <view class="tts-btn {{ttsEnabled ? 'tts-on' : 'tts-off'}}" bindtap="onToggleTTSBtn">
+          <text wx:if="{{ttsEnabled}}">🔊</text>
+          <text wx:else>🔇</text>
+        </view>
+        <!-- 音量调节入口（点击显示/隐藏滑块） -->
+        <view class="volume-icon" bindtap="onToggleVolumeSlider">
+          <text>🎚</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== 聊天消息区域 ==================== -->
+  <scroll-view
+    scroll-y
+    class="chat-list"
+    scroll-top="{{scrollTop}}"
+    scroll-with-animation
+    enhanced
+    show-scrollbar="{{false}}"
+  >
+    <!-- 欢迎消息 -->
+    <view wx:if="{{messages.length === 0}}" class="welcome-card">
+      <image class="welcome-avatar" src="{{aiAvatar}}" mode="aspectFill" />
+      <view class="welcome-text">
+        <text class="welcome-greeting">{{welcomeGreeting}}</text>
+        <text class="welcome-desc">{{welcomeDesc}}</text>
+        <text wx:if="{{chatDisclaimer}}" class="welcome-disclaimer">{{chatDisclaimer}}</text>
+      </view>
+    </view>
+
+    <!-- 消息列表 -->
+    <block wx:for="{{messages}}" wx:key="id">
+      <!-- AI 消息 -->
+      <view wx:if="{{item.role === 'ai'}}" class="msg-row msg-ai">
+        <image class="msg-avatar ai-avatar" src="{{aiAvatar}}" mode="aspectFill" />
+        <view class="msg-ai-column">
+          <view class="msg-bubble ai-bubble">
+            <text wx:if="{{item.loading}}" class="typing-dots">{{typing}}</text>
+            <text wx:else class="msg-text">{{item.content}}</text>
+          </view>
+          <view
+            wx:if="{{!item.loading && item.dispatch}}"
+            class="dispatch-hint"
+            bindtap="onDispatchTap"
+            data-url="{{item.dispatch.url}}"
+          >
+            <text>{{item.dispatch.hintText}}</text>
+          </view>
+        </view>
+        <!-- AI 消息朗读按钮 -->
+        <view
+          wx:if="{{!item.loading && item.content}}"
+          class="msg-tts-btn {{ttsPlaying && currentPlayingId === item.id ? 'playing' : ''}}"
+          bindtap="onPlayTTS"
+          data-id="{{item.id}}"
+          data-text="{{item.content}}"
+        >
+          <text wx:if="{{ttsPlaying && currentPlayingId === item.id}}">⏹</text>
+          <text wx:else>🔊</text>
+        </view>
+      </view>
+
+      <!-- 用户消息 -->
+      <view wx:if="{{item.role === 'user'}}" class="msg-row msg-user">
+        <view class="msg-bubble user-bubble">
+          <text class="msg-text">{{item.content}}</text>
+        </view>
+        <view class="msg-avatar user-avatar-icon">{{chatMeLabel}}</view>
+      </view>
+    </block>
+
+    <!-- 底部留白，防止消息被输入框遮挡 -->
+    <view style="height: 20rpx"></view>
+  </scroll-view>
+
+  <!-- ==================== 底部输入区域 ==================== -->
+  <view class="input-bar" style="padding-bottom: {{inputBarPaddingBottom}}px">
+
+    <!-- 输入框行 -->
+    <view class="input-row">
+
+      <!-- 麦克风按钮（按住说话） -->
+      <view
+        class="mic-btn {{isRecording ? 'recording' : ''}}"
+        bindtouchstart="onVoiceRecordStart"
+        catchtouchend="onVoiceRecordEnd"
+        catchtouchcancel="onVoiceRecordCancel"
+        bindtap=""
+      >
+        <!-- 录音中状态 -->
+        <view wx:if="{{isRecording}}" class="mic-recording-inner">
+          <text class="mic-icon recording-icon">🎙</text>
+          <!-- 音量波纹动画 -->
+          <view class="voice-waves">
+            <view class="wave wave1"></view>
+            <view class="wave wave2"></view>
+            <view class="wave wave3"></view>
+          </view>
+          <text class="recording-time">{{recordingTime}}″</text>
+        </view>
+        <!-- 空闲状态 -->
+        <view wx:else class="mic-idle-inner">
+          <text class="mic-icon">🎙</text>
+        </view>
+        <!-- 录音提示文字 -->
+        <text class="mic-tip">{{recordingTip}}</text>
+      </view>
+
+      <!-- 输入框 -->
+      <view class="input-wrapper">
+        <input
+          class="chat-input"
+          type="text"
+          value="{{inputText}}"
+          placeholder="{{inputPlaceholder}}"
+          placeholder-class="input-placeholder"
+          confirm-type="send"
+          bindconfirm="sendMessage"
+          bindinput="onInput"
+          cursor-spacing="10"
+          adjust-position="{{false}}"
+        />
+      </view>
+
+      <!-- 发送按钮 -->
+      <view
+        class="send-btn {{inputText.trim() ? 'active' : ''}}"
+        bindtap="sendMessage"
+      >
+        <text>{{send}}</text>
+      </view>
+    </view>
+
+    <!-- 扩展功能面板 -->
+    <view wx:if="{{showMoreMenu}}" class="more-panel">
+      <view class="more-panel-inner">
+        <view class="quick-chip" bindtap="quickAsk" data-q="{{chip1}}">
+          <text>{{chip1}}</text>
+        </view>
+        <view class="quick-chip" bindtap="quickAsk" data-q="{{chip2}}">
+          <text>{{chip2}}</text>
+        </view>
+        <view class="quick-chip" bindtap="quickAsk" data-q="{{chip3}}">
+          <text>{{chip3}}</text>
+        </view>
+        <view class="quick-chip" bindtap="quickAsk" data-q="{{chip4}}">
+          <text>{{chip4}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

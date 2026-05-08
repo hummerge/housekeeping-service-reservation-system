@@ -1,0 +1,99 @@
+<view class="page health-page {{alarmOn ? 'alarm' : ''}}">
+  <view class="nav-bar">
+    <text class="nav-title">健康监测</text>
+  </view>
+
+  <!-- The Pulse Hub -->
+  <view class="pulse-hub">
+    <view class="pulse-row">
+      <view class="pulse-metric-card">
+        <view class="heart-icon-wrap">
+          <text class="heart-icon" style="animation-duration: {{heartBeatMs}}ms;">❤</text>
+        </view>
+        <view class="metric-number-row">
+          <text class="big-number {{alarmHeart ? 'bad' : 'good'}}">{{heartRate}}</text>
+          <text class="unit">bpm</text>
+        </view>
+        <text class="metric-label">心率 (Heart Rate)</text>
+      </view>
+
+      <view class="pulse-metric-card">
+        <view class="metric-number-row">
+          <text class="big-number {{alarmPulse ? 'bad' : 'good'}}">{{pulseRate}}</text>
+          <text class="unit">bpm</text>
+        </view>
+        <text class="metric-label">脉搏 (Pulse)</text>
+        <canvas canvas-id="pulseWave" id="pulseWave" class="pulse-wave" width="300" height="120"></canvas>
+      </view>
+    </view>
+  </view>
+
+  <!-- The Soul Echo -->
+  <view class="soul-echo">
+    <view class="section-title-row">
+      <text class="section-title">情绪记录区 (The Soul Echo)</text>
+    </view>
+
+    <view class="mood-selector">
+      <block wx:for="{{moods}}" wx:key="index">
+        <view
+          class="mood-item {{selectedMoodIndex === item.index ? 'active' : ''}}"
+          bindtap="onSelectMood"
+          data-index="{{item.index}}"
+        >
+          <text class="mood-emoji">{{item.emoji}}</text>
+        </view>
+      </block>
+    </view>
+
+    <view class="mood-input-wrap">
+      <textarea
+        class="mood-textarea"
+        auto-height="true"
+        placeholder="现在的心情，想对孩子说点什么吗？"
+        value="{{moodText}}"
+        bindinput="onMoodTextInput"
+      />
+    </view>
+
+    <view class="mood-trajectory">
+      <text class="trajectory-label">心情轨迹（最近7天）</text>
+      <view class="trajectory-bar">
+        <block wx:for="{{moodHistory}}" wx:key="day">
+          <view class="trajectory-block" style="background: {{item.color}};" />
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- The Memory Archive -->
+  <view class="memory-archive">
+    <view class="section-title-row">
+      <text class="section-title">历史趋势与预警 (The Memory Archive)</text>
+    </view>
+
+    <view class="chart-card">
+      <text class="chart-title">心率 24 小时趋势</text>
+      <view class="ec-canvas-wrap ec-canvas-heart">
+        <ec-canvas id="heartChart" canvas-id="heartTrend" echarts="{{ echarts }}" ec="{{ ecHeart }}"></ec-canvas>
+      </view>
+    </view>
+
+    <view class="chart-card">
+      <text class="chart-title">脉搏 24 小时趋势</text>
+      <view class="ec-canvas-wrap ec-canvas-pulse">
+        <ec-canvas id="pulseChart" canvas-id="pulseTrend" echarts="{{ echarts }}" ec="{{ ecPulse }}"></ec-canvas>
+      </view>
+    </view>
+
+    <view class="alarm-state-row" wx:if="{{alarmOn}}">
+      <text class="alarm-state-text">{{alarmText}}</text>
+    </view>
+  </view>
+
+  <!-- 一键呼叫（预警） -->
+  <view wx:if="{{alarmOn}}" class="one-key-call">
+    <button class="one-key-call-btn" bindtap="onOneKeyCall">一键呼叫</button>
+  </view>
+</view>
+

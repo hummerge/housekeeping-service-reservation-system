@@ -1,0 +1,50 @@
+<view class="page">
+  <view class="nav-bar">
+    <view class="nav-left" bindtap="goBack">‹</view>
+    <text class="nav-title">订单详情</text>
+    <view class="nav-right"></view>
+  </view>
+
+  <scroll-view scroll-y class="content" wx:if="{{order}}">
+    <view class="status-card status-bg-{{order.statusCode}}">
+      <view class="status-tag">{{order.status}}</view>
+      <view class="status-title">{{order.statusText}}</view>
+      <view class="status-desc">订单提交成功后，平台会人工核对需求并联系您确认。</view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">基础信息</view>
+      <view class="row"><text class="label">订单编号</text><text class="value code" bindtap="copyOrderNo">{{order.id}}</text></view>
+      <view class="row"><text class="label">服务项目</text><text class="value">{{order.serviceName}}</text></view>
+      <view class="row"><text class="label">参考价格</text><text class="value">{{order.servicePrice}}</text></view>
+      <view class="row"><text class="label">下单时间</text><text class="value">{{order.createTime}}</text></view>
+      <view class="row"><text class="label">预约时间</text><text class="value">{{order.form.time}}</text></view>
+      <view class="row"><text class="label">联系人</text><text class="value">{{order.form.name}}</text></view>
+      <view class="row"><text class="label">联系电话</text><text class="value">{{order.form.mobile}}</text></view>
+      <view class="row"><text class="label">服务地址</text><text class="value address">{{order.form.address}}</text></view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">需求详情</view>
+      <block wx:for="{{order.fields}}" wx:key="key">
+        <view class="row" wx:if="{{order.form[item.key]}}">
+          <text class="label">{{item.label}}</text>
+          <text class="value address">{{order.form[item.key]}}</text>
+        </view>
+      </block>
+    </view>
+
+    <view class="info-card tip-card">
+      <view class="card-title">服务说明</view>
+      <view class="tip-text">当前为前端可交互闭环版本，订单状态暂由本地数据维护。后续如需接入真实客服、服务人员排班、订单流转，我可以继续帮你接着做。</view>
+    </view>
+
+    <view class="action-space"></view>
+  </scroll-view>
+
+  <view class="bottom-bar" wx:if="{{order}}">
+    <view class="ghost-btn" bindtap="contactService">联系客服</view>
+    <view class="warn-btn" wx:if="{{order.statusCode === 'pending' || order.statusCode === 'confirmed'}}" bindtap="cancelOrder">取消订单</view>
+    <view class="primary-btn" wx:if="{{order.statusCode === 'completed' || order.statusCode === 'cancelled' || order.statusCode === 'pending' || order.statusCode === 'confirmed' || order.statusCode === 'serving'}}" bindtap="bookAgain">再来一单</view>
+  </view>
+</view>

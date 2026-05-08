@@ -1,0 +1,7 @@
+{
+  "name": "aiChat",
+  "version": "1.0.0",
+  "description": "银发关怀 AI 对话云函数",
+  "main": "index.js",
+  "dependencies": {}
+}

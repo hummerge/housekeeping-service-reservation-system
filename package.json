@@ -1,0 +1,9 @@
+{
+  "name": "yyousn",
+  "version": "1.0.0",
+  "description": "温颐时光",
+  "dependencies": {
+    "echarts": "^5.4.3",
+    "echarts-for-weixin": "^1.0.2"
+  }
+}

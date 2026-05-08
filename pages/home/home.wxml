@@ -1,0 +1,199 @@
+<view class="container">
+  <view class="nav-bar">
+    <view class="nav-lang" bindtap="toggleLocale">
+      <text class="nav-lang-text">{{langBtnLabel}}</text>
+    </view>
+    <text class="nav-title">{{navTitle}}</text>
+  </view>
+
+  <scroll-view scroll-y class="content">
+    <view class="search-section">
+      <view class="search-bar">
+        <image class="search-icon" src="{{IconData.icon_search}}" mode="aspectFit"></image>
+        <input
+          class="search-input"
+          placeholder="{{searchPlaceholder}}"
+          confirm-type="search"
+          value="{{searchQuery}}"
+          bindinput="onSearchInput"
+        />
+        <view wx:if="{{searchQuery}}" class="search-clear" bindtap="clearSearch">×</view>
+      </view>
+
+      <view wx:if="{{searchResults.length}}" class="search-result-panel">
+        <block wx:for="{{searchResults}}" wx:key="type">
+          <view
+            class="search-result-item"
+            bindtap="onResultTap"
+            data-page-kind="{{item.pageKind}}"
+            data-url="{{item.url}}"
+            data-relaunch-url="{{item.relaunchUrl}}"
+          >
+            <view class="result-icon-wrap">
+              <image class="result-icon" src="{{item.icon}}" mode="aspectFit"></image>
+            </view>
+            <view class="result-content">
+              <text class="result-name">{{item.name}}</text>
+              <text class="result-category" wx:if="{{item.category}}">{{item.category}}</text>
+            </view>
+            <text class="result-arrow">›</text>
+          </view>
+        </block>
+      </view>
+      <view wx:elif="{{searchQuery && !searchResults.length}}" class="search-empty">
+        <text class="search-empty-text">{{searchEmpty}}</text>
+      </view>
+    </view>
+
+    <view class="promo-section">
+      <swiper
+        class="promo-swiper"
+        indicator-dots
+        indicator-color="rgba(255,255,255,0.45)"
+        indicator-active-color="#c28a55"
+        autoplay
+        circular
+        interval="4500"
+        duration="500"
+      >
+        <block wx:for="{{promoSlides}}" wx:key="*this">
+          <swiper-item>
+            <image class="promo-image" src="{{item}}" mode="aspectFill"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+
+    <view class="quick-column">
+      <view class="quick-column-modal-entry" bindtap="openServiceModal">
+        <text class="quick-column-modal-entry-text">{{serviceModalEntry}}</text>
+      </view>
+      <block wx:for="{{serviceCategories}}" wx:key="id">
+        <view class="category-block">
+          <view class="category-bubble" bindtap="onCategoryHeaderTap" data-id="{{item.id}}">
+            <view class="quick-icon-bg category-bubble-icon">
+              <image class="quick-icon" src="{{item.icon}}" mode="aspectFit"></image>
+            </view>
+            <text class="category-bubble-title">{{item.title}}</text>
+            <text class="category-bubble-chevron">{{expandedCategoryId === item.id ? '∨' : '›'}}</text>
+          </view>
+          <view wx:if="{{expandedCategoryId === item.id}}" class="category-drawer">
+            <block wx:for="{{item.children}}" wx:for-item="sub" wx:key="key">
+              <view
+                class="category-child-row"
+                bindtap="onCategoryChildTap"
+                data-kind="{{sub.kind}}"
+                data-url="{{sub.url}}"
+                data-relaunch-url="{{sub.relaunchUrl}}"
+              >
+                <text class="category-child-text">{{sub.label}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view class="section-title-wrap">
+      <text class="section-title">{{sectionMap}}</text>
+    </view>
+    <view class="map-card">
+      <view class="map-header">
+        <view class="map-pin"></view>
+        <text class="map-title">{{selectedActivity.name || mapFallbackTitle}}</text>
+      </view>
+      <view class="map-body">
+        <map
+          class="home-map"
+          latitude="{{mapCenter.latitude}}"
+          longitude="{{mapCenter.longitude}}"
+          scale="{{mapScale}}"
+          markers="{{markers}}"
+          show-location
+          enable-scroll
+          enable-zoom
+          bindmarkertap="onMarkerTap"
+        ></map>
+        <view wx:if="{{mapStatusText}}" class="map-status">
+          <text class="map-status-text">{{mapStatusText}}</text>
+        </view>
+      </view>
+      <view class="map-footer">
+        <text class="map-address">
+          {{selectedActivity.address || mapAddrHint}}
+          <text wx:if="{{selectedActivityDistanceText}}"> · {{mapDistanceYou}} {{selectedActivityDistanceText}}</text>
+        </text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="tab-bar">
+    <view class="tab-item" bindtap="switchTabPage" data-url="/pages/home/home">
+      <image class="tab-icon" src="{{IconData.tab_home}}"></image>
+      <text class="active-text">{{tabHome}}</text>
+    </view>
+    <view class="tab-item" bindtap="switchTabPage" data-url="/subpackage/pkg-feature/reminder/reminder">
+      <image class="tab-icon" src="{{IconData.tab_reminder}}"></image>
+      <text>{{tabReminder}}</text>
+    </view>
+    <view class="tab-item tab-add" bindtap="goToChat">
+      <view class="ai-avatar-wrapper">
+        <image
+          class="ai-avatar"
+          src="{{aiAvatar}}"
+          mode="aspectFill"
+        />
+      </view>
+    </view>
+    <view class="tab-item" bindtap="switchTabPage" data-url="/subpackage/pkg-feature/health-bar/health-bar">
+      <image class="tab-icon" src="{{IconData.tab_health}}"></image>
+      <text>{{tabHealth}}</text>
+    </view>
+    <view class="tab-item" bindtap="switchTabPage" data-url="/subpackage/pkg-feature/mine/mine">
+      <image class="tab-icon" src="{{IconData.tab_mine}}"></image>
+      <text>{{tabMine}}</text>
+    </view>
+  </view>
+
+  <!-- 首页弹窗：左侧入口按钮 + 右侧对应内容 -->
+  <view wx:if="{{showQuickModal}}" class="quick-modal-mask" bindtap="closeQuickModal">
+    <view class="quick-modal-panel" catchtap="stopQuickModalTap">
+      <view class="quick-modal-close" bindtap="closeQuickModal">×</view>
+      <view class="quick-modal-left">
+        <scroll-view scroll-y class="quick-modal-left-scroll">
+          <block wx:for="{{serviceCategories}}" wx:key="id">
+            <view
+              class="quick-modal-left-item {{activeQuickKey === item.id ? 'active' : ''}}"
+              bindtap="onModalCategoryTap"
+              data-id="{{item.id}}"
+            >
+              <view class="quick-icon-bg">
+                <image class="quick-icon" src="{{item.icon}}" mode="aspectFit"></image>
+              </view>
+              <text class="quick-modal-left-text">{{item.title}}</text>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+
+      <view class="quick-modal-right">
+        <view class="quick-modal-right-header">
+          <text class="quick-modal-title">{{quickModalTitle}}</text>
+        </view>
+        <scroll-view scroll-y class="quick-modal-right-scroll">
+          <block wx:if="{{quickModalItems && quickModalItems.length}}">
+            <block wx:for="{{quickModalItems}}" wx:key="key">
+              <view class="quick-modal-right-item" bindtap="onQuickModalItemTap" data-kind="{{item.kind}}" data-label="{{item.label}}" data-phone-number="{{item.phoneNumber}}" data-url="{{item.url}}" data-relaunch-url="{{item.relaunchUrl}}">
+                <text class="quick-modal-right-label">{{item.label}}</text>
+              </view>
+            </block>
+          </block>
+          <view wx:else class="quick-modal-empty">
+            <text>{{quickModalEmpty}}</text>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>
+

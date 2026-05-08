@@ -1,0 +1,307 @@
+page {
+  background: #0b1220;
+  min-height: 100vh;
+}
+
+.health-page {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* 预警边缘红光闪烁 */
+.health-page.alarm {
+  box-shadow: 0 0 0 2rpx rgba(255, 77, 77, 0.25);
+  animation: edgeGlow 1s ease-in-out infinite;
+}
+
+@keyframes edgeGlow {
+  0% {
+    box-shadow: 0 0 0 2rpx rgba(255, 77, 77, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 2rpx rgba(255, 77, 77, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 2rpx rgba(255, 77, 77, 0.15);
+  }
+}
+
+.nav-bar {
+  padding-top: 44px;
+  height: 44px;
+  background: rgba(10, 20, 40, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-title {
+  font-size: 23px;
+  color: #cfe9ff;
+  font-weight: 700;
+  letter-spacing: 1rpx;
+}
+
+/* The Pulse Hub */
+.pulse-hub {
+  margin: 24rpx 24rpx 0;
+  background: radial-gradient(circle at 20% 10%, rgba(57, 255, 20, 0.12), transparent 45%), #050b18;
+  border-radius: 28rpx;
+  padding: 28rpx;
+  box-sizing: border-box;
+}
+
+.pulse-row {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+}
+
+.pulse-metric-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 22rpx;
+  padding: 22rpx 20rpx;
+}
+
+.heart-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+}
+
+.heart-icon {
+  font-size: 65rpx;
+  color: #ff4d4d;
+  animation-name: heartBeat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}
+
+.metric-number-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-top: 8rpx;
+}
+
+.big-number {
+  font-size: 85rpx;
+  font-weight: 800;
+}
+
+.big-number.good {
+  color: #39ff14;
+  text-shadow: 0 0 16rpx rgba(57, 255, 20, 0.25);
+}
+
+.big-number.bad {
+  color: #ff4d4d;
+  text-shadow: 0 0 16rpx rgba(255, 77, 77, 0.25);
+}
+
+.unit {
+  margin-left: 10rpx;
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 700;
+}
+
+.metric-label {
+  margin-top: 10rpx;
+  display: block;
+  text-align: center;
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+}
+
+.pulse-wave {
+  width: 100%;
+  height: 180rpx;
+  margin-top: 12rpx;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 16rpx;
+}
+
+/* The Soul Echo */
+.soul-echo {
+  margin: 24rpx 24rpx 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 245, 249, 0.92));
+  border-radius: 28rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: #333333;
+}
+
+.mood-selector {
+  margin-top: 22rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10rpx;
+}
+
+.mood-item {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 24rpx;
+  background: rgba(0, 0, 0, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mood-item.active {
+  background: rgba(214, 143, 172, 0.22);
+  box-shadow: 0 0 0 2rpx rgba(214, 143, 172, 0.35);
+}
+
+.mood-emoji {
+  font-size: 69rpx;
+}
+
+.mood-input-wrap {
+  margin-top: 20rpx;
+}
+
+.mood-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  border-radius: 20rpx;
+  padding: 18rpx;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1rpx solid rgba(0, 0, 0, 0.06);
+  font-size: 34rpx;
+  color: #333333;
+}
+
+.mood-trajectory {
+  margin-top: 20rpx;
+}
+
+.trajectory-label {
+  font-size: 30rpx;
+  color: #666666;
+  font-weight: 600;
+}
+
+.trajectory-bar {
+  margin-top: 14rpx;
+  display: flex;
+  flex-direction: row;
+  gap: 10rpx;
+}
+
+.trajectory-block {
+  flex: 1;
+  height: 18rpx;
+  border-radius: 999rpx;
+}
+
+/* Memory Archive */
+.memory-archive {
+  margin: 24rpx 24rpx 0;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 28rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+  margin-bottom: 180rpx;
+}
+
+.alarm-state-row {
+  margin-top: 14rpx;
+}
+
+.alarm-state-text {
+  color: #ff4d4d;
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.chart-card {
+  margin-top: 18rpx;
+  padding: 16rpx;
+  border-radius: 22rpx;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.chart-title {
+  display: block;
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 800;
+}
+
+.ec-canvas-wrap {
+  width: 100%;
+  height: 360rpx;
+  margin-top: 10rpx;
+  border-radius: 18rpx;
+  overflow: hidden;
+}
+
+.ec-canvas-wrap ec-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.trend-canvas {
+  width: 100%;
+  height: 220rpx;
+  margin-top: 10rpx;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 18rpx;
+}
+
+/* 一键呼叫按钮 */
+.one-key-call {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 90rpx;
+  display: flex;
+  justify-content: center;
+  padding: 0 24rpx;
+  z-index: 999;
+}
+
+.one-key-call-btn {
+  width: 100%;
+  height: 110rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, #ff4d4d, #ff8a5b);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 41rpx;
+  box-shadow: 0 12rpx 26rpx rgba(255, 77, 77, 0.28);
+}
+
